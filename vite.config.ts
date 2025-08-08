@@ -8,7 +8,7 @@ export default defineConfig({
 	plugins: [
 		vue(),
 		dts({
-			include: ['src/**/*.{ts,tsx,vue}', 'src/DatePicker/**/*.{ts,d.ts}'],
+			include: ['src/**/*.{ts,tsx,vue}', 'src/types/**/*.{ts,d.ts}'],
 			copyDtsFiles: true,
 		}),
 	],
