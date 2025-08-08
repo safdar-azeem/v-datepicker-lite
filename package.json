@@ -1,0 +1,62 @@
+{
+  "name": "v-datepicker-lite",
+  "version": "0.0.1",
+  "description": "A lightweight Vue 3 date picker with date, time, date-time, week, and month modes",
+  "type": "module",
+  "author": "safdar-azeem",
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "vue",
+    "vue3",
+    "datepicker",
+    "date-picker",
+    "calendar",
+    "timepicker",
+    "time-picker",
+    "datetime",
+    "date-time-picker",
+    "week-picker",
+    "month-picker",
+    "typescript",
+    "composition-api",
+    "accessible",
+    "responsive",
+    "ui-component",
+    "frontend"
+  ],
+  "homepage": "https://github.com/safdar-azeem/v-datepicker-lite#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safdar-azeem/v-datepicker-lite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/safdar-azeem/v-datepicker-lite/issues"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "vue": "^3.4.31"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "@types/vue": "^2.0.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.3.1",
+    "vite-plugin-dts": "^3.9.1",
+    "vue-tsc": "^2.0.21"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
