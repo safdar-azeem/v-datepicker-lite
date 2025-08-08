@@ -4,13 +4,13 @@ A lightweight and customizable Vue 3 date picker component with support for date
 
 ## Features
 
--   **Multiple Selection Modes**: Supports `date`, `time`, `dateTime`, `week`, and `month` modes.
--   **Responsive Design**: Adapts to various screen sizes with a clean, modern UI.
--   **Accessibility**: Includes ARIA attributes and keyboard navigation for enhanced usability.
--   **Customizable**: Flexible props for date format, time format, min/max dates, disabled dates, and more.
--   **Time Selection**: Supports 12h/24h formats with customizable time intervals (15, 30, or 60 minutes).
--   **Performance Optimized**: Uses Vue 3 composition API for efficient rendering and state management.
--   **TypeScript Support**: Fully typed with TypeScript for better developer experience.
+-  **Multiple Selection Modes**: Supports `date`, `time`, `dateTime`, `week`, and `month` modes.
+-  **Responsive Design**: Adapts to various screen sizes with a clean, modern UI.
+-  **Accessibility**: Includes ARIA attributes and keyboard navigation for enhanced usability.
+-  **Customizable**: Flexible props for date format, time format, min/max dates, disabled dates, and more.
+-  **Time Selection**: Supports 12h/24h formats with customizable time intervals (15, 30, or 60 minutes).
+-  **Performance Optimized**: Uses Vue 3 composition API for efficient rendering and state management.
+-  **TypeScript Support**: Fully typed with TypeScript for better developer experience.
 
 ## Demo
 
@@ -47,16 +47,14 @@ const selectedDate = (ref < Date) | (null > null)
 </script>
 
 <template>
-	<div>
-		<h3>Date Picker</h3>
-		<DatePicker
-			v-model:value="selectedDate"
-			mode="date" />
-		<p>
-			Selected:
-			{{ selectedDate ? selectedDate.toLocaleDateString() : 'None' }}
-		</p>
-	</div>
+   <div>
+      <h3>Date Picker</h3>
+      <DatePicker v-model:value="selectedDate" mode="date" />
+      <p>
+         Selected:
+         {{ selectedDate ? selectedDate.toLocaleDateString() : 'None' }}
+      </p>
+   </div>
 </template>
 ```
 
@@ -73,16 +71,14 @@ const selectedWeek = (ref < Date) | (null > null)
 </script>
 
 <template>
-	<div>
-		<h3>Week Picker</h3>
-		<DatePicker
-			v-model:value="selectedWeek"
-			mode="week" />
-		<p>
-			Selected:
-			{{ selectedWeek ? selectedWeek.toLocaleDateString() : 'None' }}
-		</p>
-	</div>
+   <div>
+      <h3>Week Picker</h3>
+      <DatePicker v-model:value="selectedWeek" mode="week" />
+      <p>
+         Selected:
+         {{ selectedWeek ? selectedWeek.toLocaleDateString() : 'None' }}
+      </p>
+   </div>
 </template>
 ```
 
@@ -99,16 +95,14 @@ const selectedMonth = (ref < Date) | (null > null)
 </script>
 
 <template>
-	<div>
-		<h3>Month Picker</h3>
-		<DatePicker
-			v-model:value="selectedMonth"
-			mode="month" />
-		<p>
-			Selected:
-			{{ selectedMonth ? selectedMonth.toLocaleDateString() : 'None' }}
-		</p>
-	</div>
+   <div>
+      <h3>Month Picker</h3>
+      <DatePicker v-model:value="selectedMonth" mode="month" />
+      <p>
+         Selected:
+         {{ selectedMonth ? selectedMonth.toLocaleDateString() : 'None' }}
+      </p>
+   </div>
 </template>
 ```
 
@@ -125,18 +119,18 @@ const selectedDateTime = (ref < Date) | (null > null)
 </script>
 
 <template>
-	<div>
-		<h3>DateTime Picker</h3>
-		<DatePicker
-			v-model:value="selectedDateTime"
-			mode="dateTime"
-			time-format="12h"
-			time-interval="15" />
-		<p>
-			Selected:
-			{{ selectedDateTime ? selectedDateTime.toLocaleString() : 'None' }}
-		</p>
-	</div>
+   <div>
+      <h3>DateTime Picker</h3>
+      <DatePicker
+         v-model:value="selectedDateTime"
+         mode="dateTime"
+         time-format="12h"
+         time-interval="15" />
+      <p>
+         Selected:
+         {{ selectedDateTime ? selectedDateTime.toLocaleString() : 'None' }}
+      </p>
+   </div>
 </template>
 ```
 
@@ -153,21 +147,18 @@ const selectedDate = (ref < Date) | (null > null)
 </script>
 
 <template>
-	<div>
-		<h3>Restricted Date Picker</h3>
-		<DatePicker
-			v-model:value="selectedDate"
-			mode="date"
-			:min-date="new Date().toISOString().split('T')[0]"
-			:disabled-dates="[
-				{ start: '2025-08-15', end: '2025-08-20' },
-				{ start: '2025-08-25' },
-			]" />
-		<p>
-			Selected:
-			{{ selectedDate ? selectedDate.toLocaleDateString() : 'None' }}
-		</p>
-	</div>
+   <div>
+      <h3>Restricted Date Picker</h3>
+      <DatePicker
+         v-model:value="selectedDate"
+         mode="date"
+         :min-date="new Date().toISOString().split('T')[0]"
+         :disabled-dates="[{ start: '2025-08-15', end: '2025-08-20' }, { start: '2025-08-25' }]" />
+      <p>
+         Selected:
+         {{ selectedDate ? selectedDate.toLocaleDateString() : 'None' }}
+      </p>
+   </div>
 </template>
 ```
 
@@ -200,17 +191,15 @@ Customize the appearance using the following CSS variables defined in `style.css
 
 ```css
 :root {
-	--date-picker-primary: #4f46e5; /* Primary color for selected items */
-	--date-picker-primary-fg: #ffffff; /* Foreground color for selected items */
-	--date-picker-text: #374151; /* Text color */
-	--date-picker-border: #d1d5db; /* Border color */
-	--date-picker-bg: #ffffff; /* Background color */
-	--date-picker-secondary: #f7f7f9; /* Secondary background color */
-	--date-picker-secondary-dark: #eff0f3; /* Hover background color */
-	--date-picker-disabled: #9ca3af; /* Disabled item color */
-	--date-picker-today: #fef3c7; /* Today highlight color */
-	--date-picker-radius: 0.375em; /* Border radius */
-	--date-picker-hover: #f3f4f6; /* Hover background color */
+   --date-picker-primary: #4f46e5; /* Primary color for selected items */
+   --date-picker-primary-fg: #ffffff; /* Foreground color for selected items */
+   --date-picker-text: #374151; /* Text color */
+   --date-picker-border: #d1d5db; /* Border color */
+   --date-picker-secondary: #f7f7f9; /* Secondary background color */
+   --date-picker-disabled: #9ca3af; /* Disabled item color */
+   --date-picker-today: #fef3c7; /* Today highlight color */
+   --date-picker-radius: 0.375em; /* Border radius */
+   --date-picker-hover: #f3f4f6; /* Hover background color */
 }
 ```
 
