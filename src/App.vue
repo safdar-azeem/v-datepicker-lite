@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import DatePicker from './DatePicker/DatePicker.vue'
+import DatePicker from './components/DatePicker.vue'
 
 const dateValue = ref<Date | null>(null)
 const weekValue = ref<Date | null>(null)
@@ -12,7 +12,7 @@ const dateTimeValue = ref<Date | null>(null)
 	<div
 		style="
 			padding: 2em;
-			max-width: 400px;
+			max-width: 450px;
 			margin: 0 auto;
 			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 				sans-serif;
