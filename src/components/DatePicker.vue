@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import '../css/style.css'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import DateView from './DateView.vue'
 import WeekView from './WeekView.vue'
 import TimeView from './TimeView.vue'
@@ -52,13 +52,21 @@ const {
 } = useCalendar(props, emit)
 
 const onTimeUpdate = (newTime: Date) => {
-   emitValue(newTime)
+   if (props.mode === 'dateTime' && selectedDate.value) {
+      const updatedDateTime = new Date(selectedDate.value.getTime())
+      updatedDateTime.setHours(newTime.getHours(), newTime.getMinutes(), 0, 0)
+      emitValue(updatedDateTime)
+   } else {
+      emitValue(newTime)
+   }
 }
 
-onMounted(() => {
-   if (datePickerContent.value) {
-      datePickerContentHeight.value = datePickerContent.value.clientHeight
-   }
+onMounted(async () => {
+   nextTick(() => {
+      if (datePickerContent.value) {
+         datePickerContentHeight.value = datePickerContent.value.clientHeight
+      }
+   })
 })
 </script>
 
