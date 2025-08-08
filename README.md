@@ -191,22 +191,18 @@ Customize the appearance using the following CSS variables defined in `style.css
 
 ```css
 :root {
-   --date-picker-primary: #4f46e5; /* Primary color for selected items */
-   --date-picker-primary-fg: #ffffff; /* Foreground color for selected items */
-   --date-picker-text: #374151; /* Text color */
-   --date-picker-border: #d1d5db; /* Border color */
-   --date-picker-secondary: #f7f7f9; /* Secondary background color */
-   --date-picker-disabled: #9ca3af; /* Disabled item color */
-   --date-picker-today: #fef3c7; /* Today highlight color */
-   --date-picker-radius: 0.375em; /* Border radius */
-   --date-picker-hover: #f3f4f6; /* Hover background color */
+   --date-picker-primary: #2d66ed;
+   --date-picker-primary-fg: #ffffff;
+   --date-picker-text: inherit;
+   --date-picker-border: #00000020;
+   --date-picker-secondary: #00000010;
+   --date-picker-hover: #00000010;
+   --date-picker-disabled: #000000b4;
+   --date-picker-today: #00000010;
+   --date-picker-radius: 0.375em;
 }
 ```
 
 ## Author
 
 [safdar-azeem](https://github.com/safdar-azeem)
-
-## License
-
-MIT
