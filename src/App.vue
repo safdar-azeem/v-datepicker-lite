@@ -14,6 +14,7 @@ const dateTimeValue = ref<Date | null>(null)
          padding: 2em;
          max-width: 450px;
          margin: 0 auto;
+
          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       ">
       <h1 style="margin-bottom: 0.5em; color: #374151">Vue Datepicker Lite</h1>
