@@ -47,7 +47,13 @@
     "vite-plugin-dts": "^3.9.1",
     "vue-tsc": "^2.0.21"
   },
-  "engines": {
-    "node": ">=16.0.0"
+  "prettier": {
+    "printWidth": 105,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "tabWidth": 3,
+    "endOfLine": "auto",
+    "bracketSameLine": true
   }
 }
