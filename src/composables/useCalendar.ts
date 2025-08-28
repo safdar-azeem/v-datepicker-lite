@@ -101,8 +101,42 @@ export function useCalendar(props: any, emit: any) {
       viewMode.value = 'date'
    }
 
+   const detectDateFormat = (dateString: string): string => {
+      const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?$/
+      const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/
+
+      if (isoDateTimeRegex.test(dateString)) {
+         return dateString.includes('.') ? 'YYYY-MM-DDTHH:mm:ss.sssZ' : 'YYYY-MM-DDTHH:mm:ssZ'
+      } else if (isoDateRegex.test(dateString)) {
+         return 'YYYY-MM-DD'
+      }
+
+      return props.format || 'YYYY-MM-DD'
+   }
+
+   const formatDateToOriginalFormat = (date: Date, originalValue: string): string => {
+      const detectedFormat = detectDateFormat(originalValue)
+
+      if (detectedFormat.includes('T')) {
+         if (detectedFormat.includes('.sss')) {
+            return date.toISOString()
+         } else {
+            return date.toISOString().replace(/\.\d{3}Z$/, 'Z')
+         }
+      }
+
+      return datePickerFormatDate(date, detectedFormat)
+   }
+
    const emitValue = (date: Date) => {
-      const value = typeof props.value === 'string' ? datePickerFormatDate(date, props.format) : date
+      let value: Date | string
+
+      if (typeof props.value === 'string') {
+         value = formatDateToOriginalFormat(date, props.value)
+      } else {
+         value = date
+      }
+
       emit('update:value', value)
       emit('change', value)
       emit('select', value)
