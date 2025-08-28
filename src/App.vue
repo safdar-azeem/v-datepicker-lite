@@ -5,7 +5,7 @@ import DatePicker from './components/DatePicker.vue'
 const dateValue = ref<Date | null>(null)
 const weekValue = ref<Date | null>(null)
 const monthValue = ref<Date | null>(null)
-const dateTimeValue = ref<Date | null>(null)
+const dateTimeValue = ref<Date | null>()
 </script>
 
 <template>
