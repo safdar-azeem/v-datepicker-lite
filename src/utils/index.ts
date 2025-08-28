@@ -6,6 +6,8 @@ export const datePickerFormatDate = (date: Date, format: string = 'YYYY-MM-DD'):
    const day = String(date.getDate()).padStart(2, '0')
    const hours = String(date.getHours()).padStart(2, '0')
    const minutes = String(date.getMinutes()).padStart(2, '0')
+   const seconds = String(date.getSeconds()).padStart(2, '0')
+   const milliseconds = String(date.getMilliseconds()).padStart(3, '0')
 
    return format
       .replace('YYYY', year.toString())
@@ -13,6 +15,8 @@ export const datePickerFormatDate = (date: Date, format: string = 'YYYY-MM-DD'):
       .replace('DD', day)
       .replace('HH', hours)
       .replace('mm', minutes)
+      .replace('ss', seconds)
+      .replace('sss', milliseconds)
 }
 
 export const datePickerParseDate = (dateString: string): Date | null => {
