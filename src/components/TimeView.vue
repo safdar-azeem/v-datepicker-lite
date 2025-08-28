@@ -58,7 +58,9 @@ watch(
 onMounted(() => {
    initializeTime()
    nextTick(() => {
-      scrollToSelected(timeListRef.value)
+      setTimeout(() => {
+         scrollToSelected(timeListRef.value)
+      }, 3)
    })
 })
 </script>
