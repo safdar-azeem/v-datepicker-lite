@@ -29,6 +29,8 @@ yarn add v-datepicker-lite
 pnpm add v-datepicker-lite
 ```
 
+> Don't forget to follow me on [GitHub](https://github.com/safdar-azeem)!
+
 ## Usage
 
 Below are examples demonstrating different configurations of the Vue DatePicker component.
@@ -162,6 +164,35 @@ const selectedDate = (ref < Date) | (null > null)
 </template>
 ```
 
+### 6. Standalone Time Picker
+
+A time picker component for selecting time only, with dropdown interface.
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { TimePicker } from 'v-datepicker-lite'
+import 'v-datepicker-lite/style.css'
+const selectedTime = (ref < string) | (null > null)
+</script>
+<template>
+   <div>
+      <h3>Time Picker</h3>
+      <TimePicker v-model:model-value="selectedTime" time-format="12h" />
+
+      <!-- With Custom Trigger -->
+      <TimePicker v-model:model-value="selectedTime" time-format="12h" v-slot="{ displayTime }">
+         <button>{{ displayTime }}</button>
+      </TimePicker>
+
+      <p>
+         Selected:
+         {{ selectedTime || 'None' }}
+      </p>
+   </div>
+</template>
+```
+
 ## Props
 
 | Prop            | Type                     | Default        | Description                                                       |
@@ -177,6 +208,13 @@ const selectedDate = (ref < Date) | (null > null)
 | `disabled`      | `boolean`                | `false`        | Disables the date picker.                                         |
 | `readonly`      | `boolean`                | `false`        | Makes the date picker read-only.                                  |
 
+## Props - TimePicker
+
+| Prop         | Type             | Default | Description                                              |
+| ------------ | ---------------- | ------- | -------------------------------------------------------- |
+| `modelValue` | `string \| null` | `null`  | v-model binding for the selected time (format: `HH:mm`). |
+| `timeFormat` | `string`         | `'12h'` | Time format: `12h` or `24h`.                             |
+
 ## Events
 
 | Event          | Payload Type             | Description                              |
@@ -184,6 +222,12 @@ const selectedDate = (ref < Date) | (null > null)
 | `update:value` | `Date \| string \| null` | Emitted when the selected value changes. |
 | `change`       | `Date \| string \| null` | Emitted when the selected value changes. |
 | `select`       | `Date \| string \| null` | Emitted when a date/time is selected.    |
+
+## Events - TimePicker
+
+| Event               | Payload Type | Description                             |
+| ------------------- | ------------ | --------------------------------------- |
+| `update:modelValue` | `string`     | Emitted when the selected time changes. |
 
 ## Styling
 
@@ -200,6 +244,13 @@ Customize the appearance using the following CSS variables defined in `style.css
    --date-picker-disabled: #000000b4;
    --date-picker-today: #00000010;
    --date-picker-radius: 0.375em;
+   --timer-picker-bg: white;
+   --timer-picker-input-bg: transparent;
+   --timer-picker-input-border: #00000020;
+   --timer-picker-input-text: inherit;
+   --timer-picker-input-text-size: 0.875em;
+   --timer-picker-input-border-radius: 0.375em;
+   --timer-picker-input-padding: 0.5em 0.75em;
 }
 ```
 
