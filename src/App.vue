@@ -1,24 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import DatePicker from './components/DatePicker.vue'
-
+import CustomTimePicker from './components/time-picker/TimePicker.vue'
 const dateValue = ref<Date | null>(null)
 const weekValue = ref<Date | null>(null)
 const monthValue = ref<Date | null>(null)
 const dateTimeValue = ref<Date | null>()
+const customTime12h = ref<string | null>(null)
+const customTime24h = ref<string | null>(null)
 </script>
-
 <template>
    <div
       style="
          padding: 2em;
          max-width: 450px;
          margin: 0 auto;
-
          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       ">
       <h1 style="margin-bottom: 0.5em; color: #374151">Vue Datepicker Lite</h1>
-
       <div style="display: grid; gap: 2em">
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">Date Mode</h3>
@@ -28,7 +27,6 @@ const dateTimeValue = ref<Date | null>()
                {{ dateValue ? dateValue.toLocaleDateString() : 'None' }}
             </p>
          </div>
-
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">Week Mode</h3>
             <DatePicker class="date-picker-container" v-model:value="weekValue" mode="week" />
@@ -37,7 +35,6 @@ const dateTimeValue = ref<Date | null>()
                {{ weekValue ? weekValue.toLocaleDateString() : 'None' }}
             </p>
          </div>
-
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">Month Mode</h3>
             <DatePicker class="date-picker-container" v-model:value="monthValue" mode="month" />
@@ -46,7 +43,6 @@ const dateTimeValue = ref<Date | null>()
                {{ monthValue ? monthValue.toLocaleDateString() : 'None' }}
             </p>
          </div>
-
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">DateTime Mode - Enhanced</h3>
             <DatePicker
@@ -59,7 +55,27 @@ const dateTimeValue = ref<Date | null>()
                {{ dateTimeValue ? dateTimeValue.toLocaleString() : 'None' }}
             </p>
          </div>
-
+         <div>
+            <h3 style="margin-bottom: 0.5em; color: #374151">Custom Time Picker - 12h Format</h3>
+            <CustomTimePicker
+               v-model:model-value="customTime12h"
+               time-format="12h"
+               v-slot="{ displayTime }">
+               <button>{{ displayTime }}</button>
+            </CustomTimePicker>
+            <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
+               Selected:
+               {{ customTime12h || 'None' }}
+            </p>
+         </div>
+         <div>
+            <h3 style="margin-bottom: 0.5em; color: #374151">Custom Time Picker - 24h Format</h3>
+            <CustomTimePicker v-model:model-value="customTime24h" time-format="24h" />
+            <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
+               Selected:
+               {{ customTime24h || 'None' }}
+            </p>
+         </div>
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">With Restrictions</h3>
             <DatePicker
@@ -74,7 +90,6 @@ const dateTimeValue = ref<Date | null>()
       </div>
    </div>
 </template>
-
 <style scoped>
 .date-picker-container {
    border: 1px solid #e5e7eb;
@@ -82,7 +97,6 @@ const dateTimeValue = ref<Date | null>()
    padding: 0px;
    width: 296.672px;
 }
-
 .date-picker-container-wide {
    border: 1px solid #e5e7eb;
    border-radius: 0.25rem;
