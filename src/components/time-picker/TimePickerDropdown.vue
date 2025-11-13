@@ -5,6 +5,7 @@ interface Props {
    selectedMinute: number
    selectedPeriod: 'AM' | 'PM'
    is12Hour: boolean
+   minuteInterval?: number
 }
 interface Emits {
    (e: 'select-hour', hour: number): void
@@ -12,7 +13,9 @@ interface Emits {
    (e: 'select-period', period: 'AM' | 'PM'): void
    (e: 'close'): void
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+   minuteInterval: 1,
+})
 const emit = defineEmits<Emits>()
 const dropdownRef = ref<HTMLDivElement | null>(null)
 const hourScroll = ref<HTMLDivElement | null>(null)
@@ -25,7 +28,9 @@ const hours = computed(() => {
    return Array.from({ length: 24 }, (_, i) => i)
 })
 const minutes = computed(() => {
-   return Array.from({ length: 60 }, (_, i) => i)
+   const interval = props.minuteInterval
+   const count = Math.floor(60 / interval)
+   return Array.from({ length: count }, (_, i) => i * interval)
 })
 const scrollToSelected = () => {
    if (hourScroll.value) {
