@@ -10,6 +10,7 @@ interface Props {
    style?: any
    className?: any
    offset?: [number, number]
+   minuteInterval?: number
 }
 interface Emits {
    (e: 'update:modelValue', value: string): void
@@ -18,6 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
    modelValue: null,
    timeFormat: '12h',
    offset: () => [0, 10],
+   minuteInterval: 1,
 })
 const emit = defineEmits<Emits>()
 const selectedHour = ref(12)
@@ -103,6 +105,7 @@ const scrollToSelected = () => {
 
 watch(() => props.modelValue, initializeTime, { immediate: true })
 watch(() => props.timeFormat, initializeTime)
+watch(() => props.minuteInterval, initializeTime)
 </script>
 <template>
    <div
@@ -114,6 +117,7 @@ watch(() => props.timeFormat, initializeTime)
          placement="bottom-start"
          :onOnShow="scrollToSelected"
          teleport
+         :arrow="false"
          :offset="offset"
          triggerClass="w-full"
          :class-name="`v-time-picker ${className}`"
@@ -139,6 +143,7 @@ watch(() => props.timeFormat, initializeTime)
             :selected-minute="selectedMinute"
             :selected-period="selectedPeriod"
             :is12-hour="is12Hour"
+            :minute-interval="minuteInterval"
             @select-hour="handleHourSelect"
             @select-minute="handleMinuteSelect"
             @select-period="handlePeriodSelect" />
