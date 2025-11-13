@@ -8,7 +8,7 @@ A lightweight and customizable Vue 3 date picker component with support for date
 -  **Responsive Design**: Adapts to various screen sizes with a clean, modern UI.
 -  **Accessibility**: Includes ARIA attributes and keyboard navigation for enhanced usability.
 -  **Customizable**: Flexible props for date format, time format, min/max dates, disabled dates, and more.
--  **Time Selection**: Supports 12h/24h formats with customizable time intervals (15, 30, or 60 minutes).
+-  **Configurable Time Intervals**: Supports any minute interval (1-60 minutes) for time selection in both TimePicker and DatePicker components.
 -  **Performance Optimized**: Uses Vue 3 composition API for efficient rendering and state management.
 -  **TypeScript Support**: Fully typed with TypeScript for better developer experience.
 
@@ -45,7 +45,7 @@ import { ref } from 'vue'
 import DatePicker from 'v-datepicker-lite'
 import 'v-datepicker-lite/style.css'
 
-const selectedDate = (ref < Date) | (null > null)
+const selectedDate = ref(null)
 </script>
 
 <template>
@@ -69,7 +69,7 @@ Select an entire week starting from the first day of the selected week.
 import { ref } from 'vue'
 import DatePicker from 'v-datepicker-lite'
 
-const selectedWeek = (ref < Date) | (null > null)
+const selectedWeek = ref(null)
 </script>
 
 <template>
@@ -93,7 +93,7 @@ Select a month and year.
 import { ref } from 'vue'
 import DatePicker from 'v-datepicker-lite'
 
-const selectedMonth = (ref < Date) | (null > null)
+const selectedMonth = ref(null)
 </script>
 
 <template>
@@ -108,26 +108,26 @@ const selectedMonth = (ref < Date) | (null > null)
 </template>
 ```
 
-### 4. DateTime Picker
+### 4. DateTime Picker with Custom Intervals
 
-Select both date and time with a 12-hour format.
+Select both date and time with configurable minute intervals.
 
 ```vue
 <script setup>
 import { ref } from 'vue'
 import DatePicker from 'v-datepicker-lite'
 
-const selectedDateTime = (ref < Date) | (null > null)
+const selectedDateTime = ref(null)
 </script>
 
 <template>
    <div>
-      <h3>DateTime Picker</h3>
+      <h3>DateTime Picker - 5 minute intervals</h3>
       <DatePicker
          v-model:value="selectedDateTime"
          mode="dateTime"
          time-format="12h"
-         time-interval="15" />
+         :minute-interval="5" />
       <p>
          Selected:
          {{ selectedDateTime ? selectedDateTime.toLocaleString() : 'None' }}
@@ -145,7 +145,7 @@ Restrict date selection with minimum date and disabled date ranges.
 import { ref } from 'vue'
 import DatePicker from 'v-datepicker-lite'
 
-const selectedDate = (ref < Date) | (null > null)
+const selectedDate = ref(null)
 </script>
 
 <template>
@@ -164,24 +164,30 @@ const selectedDate = (ref < Date) | (null > null)
 </template>
 ```
 
-### 6. Standalone Time Picker
+### 6. Standalone Time Picker with Custom Intervals
 
-A time picker component for selecting time only, with dropdown interface.
+A time picker component for selecting time only, with configurable minute intervals.
 
 ```vue
 <script setup>
 import { ref } from 'vue'
 import { TimePicker } from 'v-datepicker-lite'
 import 'v-datepicker-lite/style.css'
-const selectedTime = (ref < string) | (null > null)
+
+const selectedTime = ref(null)
 </script>
+
 <template>
    <div>
-      <h3>Time Picker</h3>
-      <TimePicker v-model:model-value="selectedTime" time-format="12h" />
+      <h3>Time Picker - 15 minute intervals</h3>
+      <TimePicker v-model:model-value="selectedTime" time-format="12h" :minute-interval="15" />
 
       <!-- With Custom Trigger -->
-      <TimePicker v-model:model-value="selectedTime" time-format="12h" v-slot="{ displayTime }">
+      <TimePicker
+         v-model:model-value="selectedTime"
+         time-format="12h"
+         :minute-interval="5"
+         v-slot="{ displayTime }">
          <button>{{ displayTime }}</button>
       </TimePicker>
 
@@ -195,25 +201,26 @@ const selectedTime = (ref < string) | (null > null)
 
 ## Props
 
-| Prop            | Type                     | Default        | Description                                                       |
-| --------------- | ------------------------ | -------------- | ----------------------------------------------------------------- |
-| `value`         | `Date \| string \| null` | `null`         | v-model binding for the selected date/time.                       |
-| `mode`          | `string`                 | `'date'`       | Selection mode: `date`, `time`, `dateTime`, `week`, or `month`.   |
-| `format`        | `string`                 | `'YYYY-MM-DD'` | Date format for string output (e.g., `YYYY-MM-DD HH:mm`).         |
-| `timeFormat`    | `string`                 | `'24h'`        | Time format: `12h` or `24h`.                                      |
-| `timeInterval`  | `number`                 | `15`           | Time selection interval in minutes: `15`, `30`, or `60`.          |
-| `minDate`       | `string`                 | `undefined`    | Minimum selectable date (ISO format: `YYYY-MM-DD`).               |
-| `maxDate`       | `string`                 | `undefined`    | Maximum selectable date (ISO format: `YYYY-MM-DD`).               |
-| `disabledDates` | `Array`                  | `[]`           | Array of disabled date ranges: `{ start: string, end?: string }`. |
-| `disabled`      | `boolean`                | `false`        | Disables the date picker.                                         |
-| `readonly`      | `boolean`                | `false`        | Makes the date picker read-only.                                  |
+| Prop             | Type                     | Default        | Description                                                                    |
+| ---------------- | ------------------------ | -------------- | ------------------------------------------------------------------------------ |
+| `value`          | `Date \| string \| null` | `null`         | v-model binding for the selected date/time.                                    |
+| `mode`           | `string`                 | `'date'`       | Selection mode: `date`, `time`, `dateTime`, `week`, or `month`.                |
+| `format`         | `string`                 | `'YYYY-MM-DD'` | Date format for string output (e.g., `YYYY-MM-DD HH:mm`).                      |
+| `timeFormat`     | `string`                 | `'24h'`        | Time format: `12h` or `24h`.                                                   |
+| `minuteInterval` | `number`                 | `1`            | Minute selection interval (1-60). Controls minute options displayed in picker. |
+| `minDate`        | `string`                 | `undefined`    | Minimum selectable date (ISO format: `YYYY-MM-DD`).                            |
+| `maxDate`        | `string`                 | `undefined`    | Maximum selectable date (ISO format: `YYYY-MM-DD`).                            |
+| `disabledDates`  | `Array`                  | `[]`           | Array of disabled date ranges: `{ start: string, end?: string }`.              |
+| `disabled`       | `boolean`                | `false`        | Disables the date picker.                                                      |
+| `readonly`       | `boolean`                | `false`        | Makes the date picker read-only.                                               |
 
 ## Props - TimePicker
 
-| Prop         | Type             | Default | Description                                              |
-| ------------ | ---------------- | ------- | -------------------------------------------------------- |
-| `modelValue` | `string \| null` | `null`  | v-model binding for the selected time (format: `HH:mm`). |
-| `timeFormat` | `string`         | `'12h'` | Time format: `12h` or `24h`.                             |
+| Prop             | Type             | Default | Description                                                                    |
+| ---------------- | ---------------- | ------- | ------------------------------------------------------------------------------ |
+| `modelValue`     | `string \| null` | `null`  | v-model binding for the selected time (format: `HH:mm`).                       |
+| `timeFormat`     | `string`         | `'12h'` | Time format: `12h` or `24h`.                                                   |
+| `minuteInterval` | `number`         | `1`     | Minute selection interval (1-60). Controls minute options displayed in picker. |
 
 ## Events
 
@@ -228,6 +235,36 @@ const selectedTime = (ref < string) | (null > null)
 | Event               | Payload Type | Description                             |
 | ------------------- | ------------ | --------------------------------------- |
 | `update:modelValue` | `string`     | Emitted when the selected time changes. |
+
+## Minute Interval Configuration
+
+The `minuteInterval` prop allows you to customize the minute options displayed in both the TimePicker and DatePicker (when in `dateTime` or `time` mode). This is useful for:
+
+-  **Scheduling applications**: Set 15 or 30-minute intervals for appointment booking
+-  **Time tracking**: Use 5 or 10-minute intervals for precise time logging
+-  **Simplified selection**: Use 60-minute intervals to show only full hours
+
+### Examples:
+
+```vue
+<!-- 5-minute intervals: 00, 05, 10, 15, ... 55 -->
+<DatePicker mode="dateTime" :minute-interval="5" />
+
+<!-- 10-minute intervals: 00, 10, 20, 30, ... 50 -->
+<TimePicker :minute-interval="10" />
+
+<!-- 15-minute intervals: 00, 15, 30, 45 -->
+<DatePicker mode="time" :minute-interval="15" />
+
+<!-- 30-minute intervals: 00, 30 -->
+<TimePicker :minute-interval="30" />
+
+<!-- 60-minute intervals: Only 00 (full hours) -->
+<DatePicker mode="dateTime" :minute-interval="60" />
+
+<!-- 1-minute intervals (default): 00, 01, 02, ... 59 -->
+<TimePicker :minute-interval="1" />
+```
 
 ## Styling
 
