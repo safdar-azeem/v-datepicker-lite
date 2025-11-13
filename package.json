@@ -1,6 +1,6 @@
 {
   "name": "v-datepicker-lite",
-  "version": "0.0.7",
+  "version": "0.1.1",
   "description": "A lightweight Vue 3 date picker with date, time, date-time, week, and month modes",
   "type": "module",
   "author": "safdar-azeem",
