@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 export function useTime(
    selectedTime: Date | null,
    timeFormat: '12h' | '24h' = '24h',
-   timeInterval: 15 | 30 | 60 = 15,
+   minuteInterval: number = 1,
    emit: any
 ) {
    const hours = ref(0)
@@ -39,7 +39,7 @@ export function useTime(
          const periodSuffix = is12HourFormat.value ? (period === 0 ? ' AM' : ' PM') : ''
 
          for (let h = startHour; h <= (is12HourFormat.value ? 12 : 23); h++) {
-            for (let m = 0; m < 60; m += timeInterval) {
+            for (let m = 0; m < 60; m += minuteInterval) {
                const displayHour = is12HourFormat.value ? h : h
                const hourValue = is12HourFormat.value
                   ? h === 12
