@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
    mode: 'date',
    format: 'YYYY-MM-DD',
    timeFormat: '24h',
-   timeInterval: 15,
+   minuteInterval: 1,
 })
 
 const emit = defineEmits<Emits>()
@@ -136,7 +136,7 @@ onMounted(async () => {
             <TimeView
                :selected-time="selectedDate"
                :time-format="timeFormat"
-               :time-interval="timeInterval"
+               :minute-interval="minuteInterval"
                @update="onTimeUpdate" />
          </div>
       </div>
@@ -145,7 +145,7 @@ onMounted(async () => {
          v-if="mode === 'time'"
          :selected-time="selectedDate"
          :time-format="timeFormat"
-         :time-interval="timeInterval"
+         :minute-interval="minuteInterval"
          @update="onTimeUpdate" />
    </div>
 </template>
