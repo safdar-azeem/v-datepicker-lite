@@ -13,7 +13,7 @@ export interface DatePickerProps {
    disabled?: boolean
    readonly?: boolean
    timeFormat?: '12h' | '24h'
-   timeInterval?: 15 | 30 | 60
+   minuteInterval?: number
 }
 
 export interface DatePickerEmits {
@@ -58,4 +58,3 @@ export interface YearData {
 export type DatePickerMode = 'date' | 'time' | 'dateTime' | 'week' | 'month'
 export type ViewMode = 'date' | 'month' | 'year' | 'time'
 export type TimeFormat = '12h' | '24h'
-export type TimeInterval = 15 | 30 | 60
