@@ -5,7 +5,7 @@ import { useTime } from '../composables/useTime'
 interface Props {
    selectedTime: Date | null
    timeFormat?: '12h' | '24h'
-   timeInterval?: 15 | 30 | 60
+   minuteInterval?: number
 }
 
 interface Emits {
@@ -14,7 +14,7 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
    timeFormat: '24h',
-   timeInterval: 15,
+   minuteInterval: 1,
 })
 
 const emit = defineEmits<Emits>()
@@ -22,7 +22,7 @@ const emit = defineEmits<Emits>()
 const timeListRef = ref<HTMLDivElement | null>(null)
 
 const { timeOptions, initializeTime, updateTime, getCurrentTimeString, selectTime, scrollToSelected } =
-   useTime(props.selectedTime, props.timeFormat, props.timeInterval, emit)
+   useTime(props.selectedTime, props.timeFormat, props.minuteInterval, emit)
 
 watch(
    () => props.selectedTime,
@@ -46,7 +46,7 @@ watch(
 )
 
 watch(
-   () => props.timeInterval,
+   () => props.minuteInterval,
    () => {
       initializeTime()
       nextTick(() => {
