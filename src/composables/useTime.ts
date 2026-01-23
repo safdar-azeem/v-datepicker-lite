@@ -9,6 +9,7 @@ export function useTime(
    const hours = ref(0)
    const minutes = ref(0)
    const timeOptions = ref<string[]>([])
+   const hasSelection = ref(false)
 
    const is12HourFormat = computed(() => timeFormat === '12h')
 
@@ -16,10 +17,12 @@ export function useTime(
       if (selectedTime) {
          hours.value = selectedTime.getHours()
          minutes.value = selectedTime.getMinutes()
+         hasSelection.value = true
       } else {
          const now = new Date()
          hours.value = now.getHours()
          minutes.value = now.getMinutes()
+         hasSelection.value = false
       }
       generateTimeOptions()
    }
@@ -28,6 +31,9 @@ export function useTime(
       if (newSelectedTime) {
          hours.value = newSelectedTime.getHours()
          minutes.value = newSelectedTime.getMinutes()
+         hasSelection.value = true
+      } else {
+         hasSelection.value = false
       }
    }
 
@@ -70,6 +76,8 @@ export function useTime(
    }
 
    const getCurrentTimeString = () => {
+      if (!hasSelection.value) return ''
+
       if (is12HourFormat.value) {
          const displayHour = hours.value === 0 ? 12 : hours.value > 12 ? hours.value - 12 : hours.value
          const period = hours.value < 12 ? ' AM' : ' PM'
@@ -102,8 +110,16 @@ export function useTime(
          m = parseInt(minuteStr)
       }
 
+      // Toggle Logic: Check if user clicked the currently selected time
+      if (hasSelection.value && hours.value === h && minutes.value === m) {
+         hasSelection.value = false
+         emit('update', null)
+         return
+      }
+
       hours.value = h
       minutes.value = m
+      hasSelection.value = true
 
       const newTime = selectedTime ? new Date(selectedTime.getTime()) : new Date()
       newTime.setHours(h, m, 0, 0)
@@ -112,7 +128,7 @@ export function useTime(
    }
 
    const scrollToSelected = (timeListRef: HTMLDivElement | null) => {
-      if (!timeListRef) return
+      if (!timeListRef || !hasSelection.value) return
 
       const selectedIndex = timeOptions.value.findIndex((time) => time === getCurrentTimeString())
 
@@ -128,6 +144,7 @@ export function useTime(
    const onTimeUpdate = (time: Date) => {
       hours.value = time.getHours()
       minutes.value = time.getMinutes()
+      hasSelection.value = true
       emit('update', time)
    }
 
