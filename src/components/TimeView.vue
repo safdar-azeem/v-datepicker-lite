@@ -9,7 +9,7 @@ interface Props {
 }
 
 interface Emits {
-   (e: 'update', time: Date): void
+   (e: 'update', time: Date | null): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
