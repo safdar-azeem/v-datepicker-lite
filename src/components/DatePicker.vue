@@ -9,6 +9,7 @@ import MonthView from './MonthView.vue'
 import type { DatePickerProps } from '../types'
 import DatePickerHeader from './DatePickerHeader.vue'
 import { useCalendar } from '../composables/useCalendar'
+import { datePickerFormatDate } from '../utils'
 
 interface Props extends DatePickerProps {}
 
@@ -36,6 +37,7 @@ const {
    selectedDate,
    canGoPrev,
    canGoNext,
+   hasTime,
    goToPrevMonth,
    goToNextMonth,
    goToPrevYear,
@@ -51,13 +53,32 @@ const {
    emitValue,
 } = useCalendar(props, emit)
 
-const onTimeUpdate = (newTime: Date) => {
+const onTimeUpdate = (newTime: Date | null) => {
+   if (newTime === null) {
+      if (selectedDate.value) {
+         const dateOnly = new Date(selectedDate.value)
+         dateOnly.setHours(0, 0, 0, 0)
+
+         // Force formatting as Date-only string when clearing time
+         const dateStr = datePickerFormatDate(dateOnly, 'YYYY-MM-DD')
+
+         emit('update:value', dateStr)
+         emit('change', dateStr)
+         emit('select', dateStr)
+      }
+      return
+   }
+
+   // Standard update
    if (props.mode === 'dateTime' && selectedDate.value) {
       const updatedDateTime = new Date(selectedDate.value.getTime())
       updatedDateTime.setHours(newTime.getHours(), newTime.getMinutes(), 0, 0)
-      emitValue(updatedDateTime)
+
+      // Pass 'true' as the second argument to force DateTime format
+      // ignoring the current string format (which might be date-only)
+      emitValue(updatedDateTime, true)
    } else {
-      emitValue(newTime)
+      emitValue(newTime, true)
    }
 }
 
@@ -82,15 +103,15 @@ onMounted(async () => {
             viewMode === 'year'
                ? goToPrevDecade()
                : viewMode === 'month'
-               ? goToPrevYear()
-               : goToPrevMonth()
+                 ? goToPrevYear()
+                 : goToPrevMonth()
          "
          @next="
             viewMode === 'year'
                ? goToNextDecade()
                : viewMode === 'month'
-               ? goToNextYear()
-               : goToNextMonth()
+                 ? goToNextYear()
+                 : goToNextMonth()
          "
          @header-click="onHeaderClick"
          @current-date="goToCurrentDate" />
@@ -134,7 +155,7 @@ onMounted(async () => {
 
          <div v-if="mode === 'dateTime' && viewMode === 'date'" class="date-picker-time-section">
             <TimeView
-               :selected-time="selectedDate"
+               :selected-time="hasTime ? selectedDate : null"
                :time-format="timeFormat"
                :minute-interval="minuteInterval"
                @update="onTimeUpdate" />
