@@ -12,7 +12,7 @@ const dateTimeValue15min = ref<Date | null>()
 const customTime5min = ref<string | null>(null)
 const customTime30min = ref<string | null>(null)
 
-const handleDateChange = (date: Date) => {
+const handleDateChange = (date: any) => {
    console.log('date :>> ', date)
 }
 </script>
