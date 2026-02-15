@@ -9,6 +9,7 @@ export default defineConfig({
       vue(),
       dts({
          include: ['src/**/*.{ts,tsx,vue}', 'src/types/**/*.{ts,d.ts}'],
+         exclude: ['src/App.vue', 'src/main.ts'],
          copyDtsFiles: true,
       }),
    ],
@@ -29,7 +30,7 @@ export default defineConfig({
          input: {
             index: path.resolve(__dirname, 'src/index.ts'),
          },
-         external: ['vue'],
+         external: ['vue', 'v-tooltip-lite'],
          output: {
             inlineDynamicImports: false,
             globals: {
