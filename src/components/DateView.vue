@@ -83,3 +83,10 @@ const selectDate = (day: CalendarDate) => {
       </table>
    </div>
 </template>
+
+<style scoped>
+.date-picker-day.other-month {
+   visibility: hidden;
+   pointer-events: none;
+}
+</style>
