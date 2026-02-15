@@ -35,6 +35,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "build:vercel": "vue-tsc -b && vite build --config vite.config.vercel.ts",
     "preview": "vite preview",
     "prepare:dist": "npm run build && cp package.json README.md dist/",
     "release:patch": "npm version patch && npm run prepare:dist && cd dist && npm publish",
