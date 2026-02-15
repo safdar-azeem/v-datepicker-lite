@@ -134,11 +134,12 @@ th {
    display: flex;
    gap: 0.65em;
    width: 100%;
+   align-items: stretch; /* Ensure columns match height */
 }
 
 .date-picker-date-section {
    flex: 1;
-   height: 100%;
+   /* Removed height: 100% to allow auto-sizing based on content */
 }
 
 .date-picker-datetime-layout .date-picker-date-section {
@@ -149,13 +150,27 @@ th {
    width: 100%;
    max-width: 74px;
    border-left: 1px solid var(--date-picker-border);
-   display: flex;
-   flex-direction: column;
+   /* Use relative positioning so the absolute child fills this height */
+   position: relative;
+   display: block;
 }
 
+/* Absolute positioning ensures the scroll container fits the flex-item height */
 .date-picker-time-section .time-picker-container {
-   flex: 1;
+   position: absolute;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
    overflow-y: auto;
+}
+
+.date-picker-time-section .time-wheel {
+   border: none;
+   border-radius: 0;
+   /* No max-height needed, constrained by absolute container */
+   height: auto;
+   min-height: 100%;
 }
 
 /* === Week === */
@@ -341,13 +356,6 @@ th {
    font-weight: 500;
 }
 
-.date-picker-time-section .time-wheel {
-   border: none;
-   border-radius: 0;
-   height: 100%;
-   max-height: none;
-}
-
 /* === Header === */
 .date-picker-header {
    display: flex;
@@ -356,6 +364,12 @@ th {
    padding: 0.45em 0.4em;
    gap: 0.2em;
    border-bottom: 1px solid var(--date-picker-border);
+}
+
+.date-picker-nav {
+   display: flex;
+   align-items: center;
+   gap: 0.2em;
 }
 
 .date-picker-nav-button {
@@ -417,7 +431,7 @@ th {
    color: inherit;
 }
 
-/*  scrollbar */
+/* scrollbar */
 .date-picker *::-webkit-scrollbar {
    height: 3px;
    width: 3px;
