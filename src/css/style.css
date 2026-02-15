@@ -93,7 +93,11 @@ th {
 }
 
 .date-picker-day.other-month {
-   opacity: 0.4;
+   opacity: 0.8;
+}
+
+.date-picker-day.other-month.selected {
+   opacity: 1 !important;
 }
 
 .date-picker-day.today {
