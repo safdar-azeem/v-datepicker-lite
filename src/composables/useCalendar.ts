@@ -5,6 +5,7 @@ import {
    datePickerParseDate,
    datePickerIsSameDay,
    datePickerIsSameMonth,
+   datePickerIsDateDisabled,
 } from '../utils'
 
 export function useCalendar(props: any, emit: any) {
@@ -104,6 +105,8 @@ export function useCalendar(props: any, emit: any) {
    }
 
    const onDateSelect = (date: Date) => {
+      if (datePickerIsDateDisabled(date, props.minDate, props.maxDate, props.disabledDates)) return
+
       // Toggle logic for Date
       if (selectedDate.value && datePickerIsSameDay(selectedDate.value, date)) {
          emit('update:value', null)
