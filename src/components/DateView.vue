@@ -38,7 +38,7 @@ const calendarWeeks = computed(() => {
    for (let i = 0; i < calendarDays.value.length; i += 7) {
       weeks.push(calendarDays.value.slice(i, i + 7))
    }
-   return weeks
+   return weeks.filter((week) => week.some((day) => day.isCurrentMonth))
 })
 
 const selectDate = (day: CalendarDate) => {
@@ -48,7 +48,7 @@ const selectDate = (day: CalendarDate) => {
 </script>
 
 <template>
-   <div class="date-picker-content">
+   <div class="date-picker-content dates">
       <table class="date-picker-table">
          <thead>
             <tr class="date-picker-weekdays-row">
