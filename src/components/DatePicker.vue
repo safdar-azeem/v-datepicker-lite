@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import '../css/style.css'
-import { ref, onMounted, nextTick } from 'vue'
 import DateView from './DateView.vue'
 import WeekView from './WeekView.vue'
 import TimeView from './TimeView.vue'
@@ -10,6 +9,7 @@ import type { DatePickerProps } from '../types'
 import DatePickerHeader from './DatePickerHeader.vue'
 import { useCalendar } from '../composables/useCalendar'
 import { datePickerFormatDate } from '../utils'
+import { datePickerChevronLeft, datePickerChevronRight, datePickerCurrentDate } from '../constants/icons'
 
 interface Props extends DatePickerProps {}
 
@@ -27,9 +27,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<Emits>()
-
-const datePickerContent = ref<HTMLDivElement | null>(null)
-const datePickerContentHeight = ref<number>(0)
 
 const {
    currentDate,
@@ -82,48 +79,69 @@ const onTimeUpdate = (newTime: Date | null) => {
    }
 }
 
-onMounted(async () => {
-   nextTick(() => {
-      if (datePickerContent.value) {
-         datePickerContentHeight.value = datePickerContent.value.clientHeight
-      }
-   })
-})
+const handlePrev = () => {
+   if (viewMode.value === 'year') {
+      goToPrevDecade()
+   } else if (viewMode.value === 'month') {
+      goToPrevYear()
+   } else {
+      goToPrevMonth()
+   }
+}
+
+const handleNext = () => {
+   if (viewMode.value === 'year') {
+      goToNextDecade()
+   } else if (viewMode.value === 'month') {
+      goToNextYear()
+   } else {
+      goToNextMonth()
+   }
+}
 </script>
 
 <template>
    <div class="date-picker">
-      <DatePickerHeader
-         v-if="mode !== 'time'"
-         :current-date="currentDate"
-         :view-mode="viewMode"
-         :can-go-prev="canGoPrev"
-         :can-go-next="canGoNext"
-         @prev="
-            viewMode === 'year'
-               ? goToPrevDecade()
-               : viewMode === 'month'
-                 ? goToPrevYear()
-                 : goToPrevMonth()
-         "
-         @next="
-            viewMode === 'year'
-               ? goToNextDecade()
-               : viewMode === 'month'
-                 ? goToNextYear()
-                 : goToNextMonth()
-         "
-         @header-click="onHeaderClick"
-         @current-date="goToCurrentDate" />
+      <div v-if="mode !== 'time'" class="date-picker-header">
+         <DatePickerHeader
+            :current-date="currentDate"
+            :view-mode="viewMode"
+            @header-click="onHeaderClick" />
+
+         <div class="date-picker-nav ml-auto">
+            <button
+               class="date-picker-nav-button"
+               :disabled="!canGoPrev"
+               @click="handlePrev"
+               type="button"
+               aria-label="Previous">
+               <span class="date-picker-nav-icon" v-html="datePickerChevronLeft"></span>
+            </button>
+
+            <button
+               class="date-picker-nav-button"
+               @click="goToCurrentDate"
+               type="button"
+               aria-label="Current Date">
+               <span class="date-picker-nav-icon" v-html="datePickerCurrentDate"></span>
+            </button>
+
+            <button
+               class="date-picker-nav-button"
+               :disabled="!canGoNext"
+               @click="handleNext"
+               type="button"
+               aria-label="Next">
+               <span class="date-picker-nav-icon" v-html="datePickerChevronRight"></span>
+            </button>
+         </div>
+      </div>
 
       <div
          :class="{
             'date-picker-datetime-layout': mode === 'dateTime' && viewMode === 'date',
-         }"
-         :style="{
-            height: datePickerContentHeight !== 0 ? datePickerContentHeight + 'px' : '100%',
          }">
-         <div class="date-picker-date-section" ref="datePickerContent">
+         <div class="date-picker-date-section">
             <DateView
                v-if="viewMode === 'date' && (mode === 'date' || mode === 'dateTime')"
                :current-date="currentDate"
