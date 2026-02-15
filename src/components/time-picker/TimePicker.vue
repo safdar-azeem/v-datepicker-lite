@@ -4,13 +4,15 @@ import TimePickerDropdown from './TimePickerDropdown.vue'
 import TimePickerInput from './TimePickerInput.vue'
 import ToolTip from 'v-tooltip-lite'
 interface Props {
-   modelValue?: string | null
+   modelValue?: string | Date | null
    timeFormat?: '12h' | '24h'
    triggerClass?: string
    style?: any
    className?: any
    offset?: [number, number]
    minuteInterval?: number
+   disabled?: boolean
+   readonly?: boolean
 }
 interface Emits {
    (e: 'update:modelValue', value: string): void
@@ -20,6 +22,8 @@ const props = withDefaults(defineProps<Props>(), {
    timeFormat: '12h',
    offset: () => [0, 10],
    minuteInterval: 1,
+   disabled: false,
+   readonly: false,
 })
 const emit = defineEmits<Emits>()
 const selectedHour = ref(12)
@@ -29,9 +33,23 @@ const dropdownRef = ref<InstanceType<typeof TimePickerDropdown> | null>(null)
 const is12Hour = computed(() => props.timeFormat === '12h')
 const initializeTime = () => {
    if (props.modelValue) {
-      const [hStr, mStr] = props.modelValue.split(':')
-      const hours24 = parseInt(hStr)
-      const minutes = parseInt(mStr)
+      let hours24 = 0
+      let minutes = 0
+
+      if (props.modelValue instanceof Date) {
+         hours24 = props.modelValue.getHours()
+         minutes = props.modelValue.getMinutes()
+      } else if (typeof props.modelValue === 'string') {
+         const [hStr, mStr] = props.modelValue.split(':')
+         hours24 = parseInt(hStr)
+         minutes = parseInt(mStr)
+      } else {
+         // Fallback or invalid type handling
+         const now = new Date()
+         hours24 = now.getHours()
+         minutes = now.getMinutes()
+      }
+
       selectedMinute.value = minutes
       if (is12Hour.value) {
          if (hours24 === 0) {
@@ -132,6 +150,8 @@ watch(() => props.minuteInterval, initializeTime)
                :period="selectedPeriod"
                :is12-hour="is12Hour"
                :trigger-class="triggerClass"
+               :disabled="disabled"
+               :readonly="readonly"
                v-slot="{ displayTime }">
                <slot v-bind="{ displayTime }" />
             </TimePickerInput>
