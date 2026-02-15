@@ -41,7 +41,7 @@ const selectMonth = (monthData: MonthData) => {
 </script>
 
 <template>
-   <div class="date-picker-content">
+   <div class="date-picker-content months">
       <table class="date-picker-table date-picker-months-table">
          <tbody class="date-picker-months-body">
             <tr v-for="(monthRow, rowIndex) in monthRows" :key="rowIndex" class="date-picker-months-row">
