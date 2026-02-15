@@ -150,6 +150,6 @@ const handleDateChange = (date: any) => {
    border: 1px solid #e5e7eb;
    border-radius: 0.25rem;
    padding: 0px;
-   width: 296.672px;
+   width: 350.672px;
 }
 </style>
