@@ -17,7 +17,6 @@ const props = withDefaults(defineProps<Props>(), {
    minuteInterval: 1,
 })
 const emit = defineEmits<Emits>()
-const dropdownRef = ref<HTMLDivElement | null>(null)
 const hourScroll = ref<HTMLDivElement | null>(null)
 const minuteScroll = ref<HTMLDivElement | null>(null)
 const periodScroll = ref<HTMLDivElement | null>(null)
