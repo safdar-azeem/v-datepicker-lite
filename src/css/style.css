@@ -34,6 +34,10 @@
    padding: 0.4em 0.3em !important;
 }
 
+.date-picker-date-section .date-picker-content.dates {
+   padding: 0.3em 0.2em 0.4em !important;
+}
+
 /* Table base styles */
 .date-picker-table {
    width: 100%;
@@ -78,8 +82,8 @@ th {
    display: flex;
    align-items: center;
    justify-content: center;
-   width: 34px;
-   height: 34px;
+   width: 33px;
+   height: 33px;
    aspect-ratio: 1/1;
    border: none;
    background: none;
