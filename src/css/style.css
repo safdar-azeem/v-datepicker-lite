@@ -30,8 +30,8 @@
    color: var(--date-picker-text);
 }
 
-.date-picker-content {
-   padding: 0 0.5em 0.5em;
+.date-picker-date-section .date-picker-content.months {
+   padding: 0.4em 0.3em !important;
 }
 
 /* Table base styles */
@@ -370,9 +370,11 @@ th {
 .date-picker-nav-icon {
    color: inherit !important;
 }
+
 .date-picker-header * {
    color: inherit !important;
 }
+
 .date-picker-nav-icon svg {
    width: 1.3em;
    height: 1.3em;
@@ -406,6 +408,7 @@ th {
    height: 3px;
    width: 3px;
 }
+
 .date-picker *::-webkit-scrollbar-track {
    border-radius: 5px;
    background-color: transparent;
@@ -438,9 +441,11 @@ th {
    border: 1px solid var(--date-picker-border, #00000020);
    border-radius: var(--date-picker-radius, 0.375rem);
 }
+
 .time-picker-sections {
    display: flex;
 }
+
 .time-picker-time-section {
    border-right: 1px solid var(--date-picker-border, #00000020);
    display: flex;
@@ -448,12 +453,15 @@ th {
    min-width: 3.5em;
    padding: 0.1em;
 }
+
 .time-picker-time-section:last-child {
    border-right: none;
 }
+
 .time-picker-period-section {
    min-width: 60px;
 }
+
 .time-picker-options-scroll {
    max-height: 193px;
    overflow-y: auto;
@@ -462,6 +470,7 @@ th {
    gap: 2px;
    padding: 2px;
 }
+
 .time-picker-option-button {
    padding: 0.29em;
    border: none;
@@ -473,17 +482,21 @@ th {
    transition: all 0.15s ease;
    text-align: center;
 }
+
 .time-picker-option-button:hover {
    background: var(--date-picker-hover, #00000010);
 }
+
 .time-picker-option-button.selected {
    background: var(--date-picker-primary, #2d66ed);
    color: var(--date-picker-primary-fg, #ffffff);
    font-weight: 500;
 }
+
 .time-picker-options-scroll::-webkit-scrollbar {
    width: 0px;
 }
+
 .time-picker-options-scroll::-webkit-scrollbar-track {
    background: transparent;
 }
