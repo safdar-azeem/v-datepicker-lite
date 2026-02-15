@@ -7,6 +7,8 @@ interface Props {
    period: 'AM' | 'PM'
    is12Hour: boolean
    triggerClass?: string
+   disabled?: boolean
+   readonly?: boolean
 }
 
 const props = defineProps<Props>()
@@ -30,7 +32,11 @@ const displayTime = computed(() => {
 
 <template>
    <slot v-bind="{ displayTime }">
-      <button type="button" class="time-picker-input" :class="triggerClass">
+      <button
+         type="button"
+         class="time-picker-input"
+         :class="[triggerClass, { 'is-disabled': disabled, 'is-readonly': readonly }]"
+         :disabled="disabled || readonly">
          <span class="time-display">{{ displayTime }}</span>
          <svg
             class="time-picker-clock-icon"
