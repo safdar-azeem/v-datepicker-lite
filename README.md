@@ -4,13 +4,13 @@ A lightweight and customizable Vue 3 date picker component with support for date
 
 ## Features
 
--  **Multiple Selection Modes**: Supports `date`, `time`, `dateTime`, `week`, and `month` modes.
--  **Responsive Design**: Adapts to various screen sizes with a clean, modern UI.
--  **Accessibility**: Includes ARIA attributes and keyboard navigation for enhanced usability.
--  **Customizable**: Flexible props for date format, time format, min/max dates, disabled dates, and more.
--  **Configurable Time Intervals**: Supports any minute interval (1-60 minutes) for time selection in both TimePicker and DatePicker components.
--  **Performance Optimized**: Uses Vue 3 composition API for efficient rendering and state management.
--  **TypeScript Support**: Fully typed with TypeScript for better developer experience.
+- **Multiple Selection Modes**: Supports `date`, `time`, `dateTime`, `week`, and `month` modes.
+- **Responsive Design**: Adapts to various screen sizes with a clean, modern UI.
+- **Accessibility**: Includes ARIA attributes and keyboard navigation for enhanced usability.
+- **Customizable**: Flexible props for date format, time format, min/max dates, disabled dates, and more.
+- **Configurable Time Intervals**: Supports any minute interval (1-60 minutes) for time selection in both TimePicker and DatePicker components.
+- **Performance Optimized**: Uses Vue 3 composition API for efficient rendering and state management.
+- **TypeScript Support**: Fully typed with TypeScript for better developer experience.
 
 ## Demo
 
@@ -240,9 +240,9 @@ const selectedTime = ref(null)
 
 The `minuteInterval` prop allows you to customize the minute options displayed in both the TimePicker and DatePicker (when in `dateTime` or `time` mode). This is useful for:
 
--  **Scheduling applications**: Set 15 or 30-minute intervals for appointment booking
--  **Time tracking**: Use 5 or 10-minute intervals for precise time logging
--  **Simplified selection**: Use 60-minute intervals to show only full hours
+- **Scheduling applications**: Set 15 or 30-minute intervals for appointment booking
+- **Time tracking**: Use 5 or 10-minute intervals for precise time logging
+- **Simplified selection**: Use 60-minute intervals to show only full hours
 
 ### Examples:
 
