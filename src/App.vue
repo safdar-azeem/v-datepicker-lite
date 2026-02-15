@@ -11,6 +11,10 @@ const dateTimeValue10min = ref<Date | null>()
 const dateTimeValue15min = ref<Date | null>()
 const customTime5min = ref<string | null>(null)
 const customTime30min = ref<string | null>(null)
+
+const handleDateChange = (date: Date) => {
+   console.log('date :>> ', date)
+}
 </script>
 <template>
    <div
@@ -125,6 +129,7 @@ const customTime30min = ref<string | null>(null)
             <DatePicker
                class="date-picker-container"
                mode="date"
+               @change="handleDateChange"
                :min-date="new Date().toISOString().split('T')[0]"
                :disabled-dates="[{ start: '2025-08-15', end: '2025-08-20' }, { start: '2025-08-25' }]" />
             <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
