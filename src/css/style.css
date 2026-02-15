@@ -94,6 +94,10 @@ th {
    color: var(--date-picker-text);
 }
 
+.date-picker-weeks-body .date-picker-day {
+   width: 100% !important;
+}
+
 .date-picker-day:hover {
    background: var(--date-picker-hover);
 }
