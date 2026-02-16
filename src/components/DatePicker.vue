@@ -101,7 +101,7 @@ const handleNext = () => {
 </script>
 
 <template>
-   <div class="date-picker">
+   <div class="date-picker" :class="mode == 'dateTime' && 'date-picker-container-wide'">
       <div v-if="mode !== 'time'" class="date-picker-header">
          <DatePickerHeader
             :current-date="currentDate"
