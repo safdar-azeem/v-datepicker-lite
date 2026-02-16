@@ -70,7 +70,6 @@ const handleDateChange = (date: any) => {
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">DateTime Mode - 5min interval</h3>
             <DatePicker
-               class="date-picker-container-wide"
                v-model:value="dateTimeValue5min"
                mode="dateTime"
                time-format="12h"
@@ -83,7 +82,6 @@ const handleDateChange = (date: any) => {
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">DateTime Mode - 10min interval</h3>
             <DatePicker
-               class="date-picker-container-wide"
                v-model:value="dateTimeValue10min"
                mode="dateTime"
                time-format="12h"
@@ -96,7 +94,6 @@ const handleDateChange = (date: any) => {
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">DateTime Mode - 15min interval</h3>
             <DatePicker
-               class="date-picker-container-wide"
                v-model:value="dateTimeValue15min"
                mode="dateTime"
                time-format="24h"
@@ -167,8 +164,6 @@ const handleDateChange = (date: any) => {
 .date-picker-container-wide {
    border: 1px solid #e5e7eb;
    border-radius: 0.25rem;
-   padding: 0px;
-   width: 350.672px;
 }
 .github-button {
    display: flex;
