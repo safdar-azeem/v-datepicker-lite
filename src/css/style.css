@@ -30,6 +30,10 @@
    color: var(--date-picker-text);
 }
 
+.date-picker-container-wide {
+   width: 350.672px;
+}
+
 .date-picker-date-section .date-picker-content.months {
    padding: 0.4em 0.3em !important;
 }
@@ -59,7 +63,6 @@ th {
 
 /* === Date === */
 .date-picker-weekdays-row th {
-   padding: 0.6em 0;
    font-size: 0.78em;
 }
 
@@ -134,7 +137,8 @@ th {
    display: flex;
    gap: 0.65em;
    width: 100%;
-   align-items: stretch; /* Ensure columns match height */
+   align-items: stretch;
+   /* Ensure columns match height */
 }
 
 .date-picker-date-section {
