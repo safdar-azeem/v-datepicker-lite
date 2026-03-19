@@ -152,28 +152,20 @@ export function useCalendar(props: any, emit: any) {
       viewMode.value = 'date'
    }
 
-   const formatDateToOriginalFormat = (date: Date, originalValue: string): string => {
-      const detectedFormat = detectDateFormat(originalValue)
-
-      if (detectedFormat.includes('T')) {
-         if (detectedFormat.includes('.sss')) {
-            return date.toISOString()
-         } else {
-            return date.toISOString().replace(/\.\d{3}Z$/, 'Z')
-         }
-      }
-
-      return datePickerFormatDate(date, detectedFormat)
-   }
-
    // Added forceTime parameter
    const emitValue = (date: Date, forceTime = false) => {
       let value: Date | string
 
       if (typeof props.value === 'string' || props.value === null || props.value === undefined) {
          // If a custom format is explicitly set (other than the default), honor it
-         if (props.format && props.format !== 'YYYY-MM-DD' && !forceTime && props.mode !== 'dateTime' && props.mode !== 'time') {
-             value = datePickerFormatDate(date, props.format)
+         if (
+            props.format &&
+            props.format !== 'YYYY-MM-DD' &&
+            !forceTime &&
+            props.mode !== 'dateTime' &&
+            props.mode !== 'time'
+         ) {
+            value = datePickerFormatDate(date, props.format)
          } else if (props.mode === 'dateTime' || props.mode === 'time' || forceTime) {
             // Standard ISO 8601 for full date & time (UTC)
             value = date.toISOString()
