@@ -170,19 +170,19 @@ export function useCalendar(props: any, emit: any) {
    const emitValue = (date: Date, forceTime = false) => {
       let value: Date | string
 
-      if (typeof props.value === 'string') {
-         if (forceTime) {
-            // FIX: Use local formatting instead of toISOString() to avoid timezone shift
-            // Checks if user provided a specific format with time, otherwise defaults to ISO-like local string
-            const hasTimeInPropsFormat =
-               props.format &&
-               (props.format.includes('H') || props.format.includes('h') || props.format.includes('m'))
-
-            const formatToUse = hasTimeInPropsFormat ? props.format : 'YYYY-MM-DDTHH:mm:ss'
-
-            value = datePickerFormatDate(date, formatToUse)
+      if (typeof props.value === 'string' || props.value === null || props.value === undefined) {
+         // If a custom format is explicitly set (other than the default), honor it
+         if (props.format && props.format !== 'YYYY-MM-DD' && !forceTime && props.mode !== 'dateTime' && props.mode !== 'time') {
+             value = datePickerFormatDate(date, props.format)
+         } else if (props.mode === 'dateTime' || props.mode === 'time' || forceTime) {
+            // Standard ISO 8601 for full date & time (UTC)
+            value = date.toISOString()
          } else {
-            value = formatDateToOriginalFormat(date, props.value)
+            // Strict Date format (Local) to prevent timezone shifts
+            const year = date.getFullYear()
+            const month = String(date.getMonth() + 1).padStart(2, '0')
+            const day = String(date.getDate()).padStart(2, '0')
+            value = `${year}-${month}-${day}`
          }
       } else {
          value = date
