@@ -21,6 +21,14 @@ export const datePickerFormatDate = (date: Date, format: string = 'YYYY-MM-DD'):
 
 export const datePickerParseDate = (dateString: string): Date | null => {
    if (!dateString) return null
+   
+   // If it's a strict date string (YYYY-MM-DD), parse it as a local date
+   // to prevent timezone shifting (which happens when new Date() parses ISO date strings as UTC)
+   if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+       const [year, month, day] = dateString.split('-').map(Number)
+       return new Date(year, month - 1, day)
+   }
+
    const date = new Date(dateString)
    return isNaN(date.getTime()) ? null : date
 }
