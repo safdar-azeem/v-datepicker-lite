@@ -3,18 +3,25 @@ import { ref } from 'vue'
 import DatePicker from './components/DatePicker.vue'
 import CustomTimePicker from './components/time-picker/TimePicker.vue'
 
-const dateValue = ref<Date | null>(null)
-const weekValue = ref<Date | null>(null)
-const monthValue = ref<Date | null>(null)
+const dateValue = ref<Date | string | null>(null)
+const weekValue = ref<Date | string | null>(null)
+const monthValue = ref<Date | string | null>(null)
 const customTime12h = ref<string | null>(null)
-const dateTimeValue5min = ref<Date | null>()
-const dateTimeValue10min = ref<Date | null>()
-const dateTimeValue15min = ref<Date | null>()
+const dateTimeValue5min = ref<Date | string | null>(null)
+const dateTimeValue10min = ref<Date | string | null>(null)
+const dateTimeValue15min = ref<Date | string | null>(null)
 const customTime5min = ref<string | null>(null)
 const customTime30min = ref<string | null>(null)
 
 const handleDateChange = (date: any) => {
    console.log('date :>> ', date)
+}
+
+// Helper to safely format the display since our picker now emits strings
+const formatDisplay = (val: Date | string | null | undefined) => {
+   if (!val) return 'None'
+   if (val instanceof Date) return val.toLocaleString()
+   return val
 }
 </script>
 
@@ -45,10 +52,18 @@ const handleDateChange = (date: any) => {
       <div style="display: grid; gap: 2em">
          <div>
             <h3 style="margin-bottom: 0.5em; color: #374151">Date Mode</h3>
-            <DatePicker class="date-picker-container" v-model:value="dateValue" mode="date" />
+            <DatePicker
+               class="date-picker-container"
+               v-model:value="dateValue"
+               mode="date"
+               @change="
+                  (value) => {
+                     console.log('value :>> ', value)
+                  }
+               " />
             <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
                Selected:
-               {{ dateValue ? dateValue.toLocaleDateString() : 'None' }}
+               {{ formatDisplay(dateValue) }}
             </p>
          </div>
          <div>
@@ -56,7 +71,7 @@ const handleDateChange = (date: any) => {
             <DatePicker class="date-picker-container" v-model:value="weekValue" mode="week" />
             <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
                Selected:
-               {{ weekValue ? weekValue.toLocaleDateString() : 'None' }}
+               {{ formatDisplay(weekValue) }}
             </p>
          </div>
          <div>
@@ -64,7 +79,7 @@ const handleDateChange = (date: any) => {
             <DatePicker class="date-picker-container" v-model:value="monthValue" mode="month" />
             <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
                Selected:
-               {{ monthValue ? monthValue.toLocaleDateString() : 'None' }}
+               {{ formatDisplay(monthValue) }}
             </p>
          </div>
          <div>
@@ -76,7 +91,7 @@ const handleDateChange = (date: any) => {
                :minute-interval="5" />
             <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
                Selected:
-               {{ dateTimeValue5min ? dateTimeValue5min.toLocaleString() : 'None' }}
+               {{ formatDisplay(dateTimeValue5min) }}
             </p>
          </div>
          <div>
@@ -88,7 +103,7 @@ const handleDateChange = (date: any) => {
                :minute-interval="10" />
             <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
                Selected:
-               {{ dateTimeValue10min ? dateTimeValue10min.toLocaleString() : 'None' }}
+               {{ formatDisplay(dateTimeValue10min) }}
             </p>
          </div>
          <div>
@@ -100,7 +115,7 @@ const handleDateChange = (date: any) => {
                :minute-interval="15" />
             <p style="margin-top: 0.5em; color: #6b7280; font-size: 0.875em">
                Selected:
-               {{ dateTimeValue15min ? dateTimeValue15min.toLocaleString() : 'None' }}
+               {{ formatDisplay(dateTimeValue15min) }}
             </p>
          </div>
          <div>
