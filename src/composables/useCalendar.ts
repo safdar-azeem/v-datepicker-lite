@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { ViewMode } from '../types'
 import {
    datePickerFormatDate,
@@ -9,13 +9,25 @@ import {
 } from '../utils'
 
 export function useCalendar(props: any, emit: any) {
-   const currentDate = ref(new Date())
-   const viewMode = ref<ViewMode>('date')
-
    const selectedDate = computed(() => {
       if (!props.value) return null
       if (props.value instanceof Date) return props.value
       return datePickerParseDate(props.value)
+   })
+
+   const currentDate = ref(selectedDate.value ? new Date(selectedDate.value) : new Date())
+   const viewMode = ref<ViewMode>('date')
+
+   watch(selectedDate, (newDate) => {
+      if (newDate) {
+         // Only update currentDate if month/year are different to avoid unnecessary UI jitter
+         if (
+            currentDate.value.getFullYear() !== newDate.getFullYear() ||
+            currentDate.value.getMonth() !== newDate.getMonth()
+         ) {
+            currentDate.value = new Date(newDate)
+         }
+      }
    })
 
    const detectDateFormat = (dateString: string): string => {
