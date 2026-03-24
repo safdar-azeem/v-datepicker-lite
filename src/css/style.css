@@ -255,7 +255,6 @@ th {
 .year-view-layout {
    display: flex;
    gap: 1px;
-   height: 100%;
    padding-right: 2px;
 }
 
@@ -266,15 +265,25 @@ th {
    border-right: 1px solid var(--date-picker-border);
    display: flex;
    flex-direction: column;
-   height: 100%;
 }
 
 .years-list {
    display: flex;
    flex-direction: column;
-   flex: 1;
+   flex: 1 1 0;
+   height: 0;
    overflow-y: auto;
    overflow-x: hidden;
+   will-change: transform;
+   contain: layout style;
+}
+
+.years-list::-webkit-scrollbar {
+   width: 0px;
+}
+
+.years-list::-webkit-scrollbar-track {
+   background: transparent;
 }
 
 .year-item {
@@ -501,6 +510,8 @@ th {
    flex-direction: column;
    gap: 2px;
    padding: 2px;
+   will-change: transform;
+   contain: layout style;
 }
 
 .time-picker-option-button {
