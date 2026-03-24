@@ -24,9 +24,18 @@ const yearsListRef = ref<HTMLElement | null>(null)
 const isUpdatingScroll = ref(false)
 
 const initYears = () => {
+   const MIN_YEAR = 1900
+   const MAX_YEAR = new Date().getFullYear() + 20
    const target = selectedYear.value || currentYear.value
-   const start = target - 40
-   years.value = Array.from({ length: 50 }, (_, i) => start + i)
+
+   const start = Math.max(MIN_YEAR, target - 40)
+   const end = Math.min(MAX_YEAR, target + 9)
+
+   const newYears = []
+   for (let i = start; i <= end; i++) {
+      newYears.push(i)
+   }
+   years.value = newYears
 }
 
 onMounted(() => {
@@ -39,7 +48,11 @@ watch(
    (newDate, oldDate) => {
       if (newDate.getFullYear() !== oldDate.getFullYear()) {
          const target = newDate.getFullYear()
-         if (!years.value.includes(target) || years.value.indexOf(target) < 10 || years.value.indexOf(target) > years.value.length - 10) {
+         if (
+            !years.value.includes(target) ||
+            years.value.indexOf(target) < 10 ||
+            years.value.indexOf(target) > years.value.length - 10
+         ) {
             initYears()
          }
          scrollToTarget(true)
@@ -51,8 +64,9 @@ const scrollToTarget = (smooth = false) => {
    nextTick(() => {
       setTimeout(() => {
          if (!yearsListRef.value) return
-         const targetEl = yearsListRef.value.querySelector('.year-item.selected') || 
-                          yearsListRef.value.querySelector('.year-item.current')
+         const targetEl =
+            yearsListRef.value.querySelector('.year-item.selected') ||
+            yearsListRef.value.querySelector('.year-item.current')
          if (targetEl) {
             targetEl.scrollIntoView({ block: 'center', behavior: smooth ? 'smooth' : 'auto' })
          }
@@ -64,29 +78,40 @@ const handleScroll = async (e: Event) => {
    const target = e.target as HTMLElement
    if (!target || isUpdatingScroll.value) return
 
+   const MIN_YEAR = 1900
+   const MAX_YEAR = new Date().getFullYear() + 30
+
    if (target.scrollTop === 0) {
-      isUpdatingScroll.value = true
-      // Reached top, prepend 20 past years
       const firstYear = years.value[0]
-      const newYears = Array.from({ length: 20 }, (_, i) => firstYear - 20 + i)
-      
-      const oldScrollHeight = target.scrollHeight
-      years.value = [...newYears, ...years.value]
-      
-      await nextTick()
-      const newScrollHeight = target.scrollHeight
-      target.scrollTop = newScrollHeight - oldScrollHeight
-      
-      setTimeout(() => { isUpdatingScroll.value = false }, 50)
+      if (firstYear > MIN_YEAR) {
+         isUpdatingScroll.value = true
+         const count = Math.min(20, firstYear - MIN_YEAR)
+         const newYears = Array.from({ length: count }, (_, i) => firstYear - count + i)
+
+         const oldScrollHeight = target.scrollHeight
+         years.value = [...newYears, ...years.value]
+
+         await nextTick()
+         const newScrollHeight = target.scrollHeight
+         target.scrollTop = newScrollHeight - oldScrollHeight
+
+         setTimeout(() => {
+            isUpdatingScroll.value = false
+         }, 50)
+      }
    } else if (target.scrollTop + target.clientHeight >= target.scrollHeight - 5) {
-      isUpdatingScroll.value = true
-      // Reached bottom, append 10 future years
       const lastYear = years.value[years.value.length - 1]
-      const newYears = Array.from({ length: 10 }, (_, i) => lastYear + 1 + i)
-      years.value = [...years.value, ...newYears]
-      
-      await nextTick()
-      setTimeout(() => { isUpdatingScroll.value = false }, 50)
+      if (lastYear < MAX_YEAR) {
+         isUpdatingScroll.value = true
+         const count = Math.min(10, MAX_YEAR - lastYear)
+         const newYears = Array.from({ length: count }, (_, i) => lastYear + 1 + i)
+         years.value = [...years.value, ...newYears]
+
+         await nextTick()
+         setTimeout(() => {
+            isUpdatingScroll.value = false
+         }, 50)
+      }
    }
 }
 
